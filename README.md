@@ -24,7 +24,6 @@ jailer --id <id> \
        --uid <uid> \
        --gid <gid> \
        [--parent-cgroup <relative_path>]
-       [--cgroup-version <cgroup-version>]
        [--cgroup <cgroup>]
        [--chroot-base-dir <chroot_base>]
        [--netns <netns>]
@@ -45,19 +44,14 @@ jailer --id <id> \
 - `parent-cgroup` is used to allow the placement of microvm cgroups in custom
   nested hierarchies. By specifying this parameter, the jailer will create a new
   cgroup named `id` for the microvm in the `<cgroup_base>/<parent_cgroup>`
-  subfolder. `cgroup_base` is the cgroup controller root for `cgroup v1` (e.g.
-  `/sys/fs/cgroup/cpu`) or the unified controller hierarchy for `cgroup v2` (
+  subfolder. `cgroup_base` is the unified controller hierarchy for `cgroup v2` (
   e.g. `/sys/fs/cgroup/unified`. `<parent_cgroup>` is a relative path within
   that hierarchy. For example, if `--parent-cgroup all_uvms/external_uvms` is
   specified, the jailer will write all cgroup parameters specified through
   `--cgroup` in `/sys/fs/cgroup/<controller_name>/all_uvms/external_uvms/<id>`.
   By default, the parent cgroup is `exec-file`. If there are no `--cgroup`
-  parameters specified and `--group-version=2` was passed, then the jailer will
+  parameters specified then the jailer will
   move the process to the specified cgroup.
-- `cgroup-version` is used to select which type of cgroup hierarchy to use for
-  the creation of cgroups. The default value is "1" which means that cgroups
-  specified with the `cgroup` argument will be created within a v1 hierarchy.
-  Supported options are "1" for cgroup-v1 and "2" for cgroup-v2.
 - `cgroup` cgroups can be passed to the jailer to let it set the values when the
   microVM process is spawned. The `--cgroup` argument must follow this format:
   `<cgroup_file>=<value>` (e.g `cpuset.cpus=0`). This argument can be used
@@ -120,7 +114,7 @@ After starting, the Jailer goes through the following operations:
   `--resource-limit` argument, by calling `setrlimit()` system call with the
   specific resource argument. If no limits are provided, the jailer bounds
   `no-file` to a maximum default value of 2048.
-- Create the `cgroup` sub-folders. The jailer can use either `cgroup v1` or
+- Create the `cgroup` sub-folders. The jailer can only use
   `cgroup v2`. On most systems, this is mounted by default in `/sys/fs/cgroup`
   (should be mounted by the user otherwise). The jailer will parse
   `/proc/mounts` to detect where each of the controllers required in `--cgroup`
@@ -188,7 +182,7 @@ Let’s also assume the, **cpuset** cgroups are mounted at
 `/sys/fs/cgroup/cpuset`. The jailer will create the following subfolder (which
 will inherit settings from the parent cgroup):
 
-- `/sys/fs/cgroup/cpuset/cloud-hypervisor/e22ohyz7v9h7pwsxhxz3skfj`
+- `/sys/fs/git push -u origin main/cpuset/cloud-hypervisor/e22ohyz7v9h7pwsxhxz3skfj`
 
 It’s worth noting that, whenever a folder already exists, nothing will be done,
 and we move on to the next directory that needs to be created. This should only
