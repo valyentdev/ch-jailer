@@ -1,0 +1,27 @@
+[package]
+name = "jailer"
+version = "0.1.0"
+authors = [
+    "Amazon Firecracker team <firecracker-devel@amazon.com>",
+    "Valyent <contact@valyent.dev>",
+]
+edition = "2021"
+description = "Process for starting Cloud-Hypervisor in production scenarios; applies a cgroup/namespace isolation barrier and then drops privileges."
+homepage = "https://github.com/valyentdev/ch-jailer"
+license = "Apache-2.0"
+
+[[bin]]
+name = "jailer"
+bench = false
+
+[dependencies]
+libc = "0.2.167"
+nix = { version = "0.29.0", default-features = false, features = ["dir"] }
+regex = { version = "1.11.1", default-features = false, features = ["std"] }
+thiserror = "2.0.3"
+vmm-sys-util = "0.12.1"
+
+utils = { path = "../utils" }
+
+[lints]
+workspace = true

@@ -1,0 +1,17 @@
+/build/
+/.kernel/
+target
+*.rs.bk
+*.iml
+.idea
+__pycache__
+*.pyc
+.vscode
+test_results/*
+*.core
+*.profraw
+.DS_Store
+*.bin
+/resources/linux
+/resources/x86_64
+/resources/aarch64
