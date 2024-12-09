@@ -15,7 +15,7 @@ derive_more = { version = "1.0.0", default-features = false, features = [
 displaydoc = "0.2.5"
 libc = "0.2.167"
 serde = { version = "1.0.215", features = ["derive"] }
-thiserror = "2.0.3"
+thiserror = "2.0.6"
 vmm-sys-util = "0.12.1"
 
 [dev-dependencies]
